@@ -73,7 +73,7 @@ jobs:
               "text": "✅ *¡Integración Continua Exitosa!*\n*Repositorio:* ${{ github.repository }}\n*Rama:* ${{ github.ref_name }}\n*Autor:* ${{ github.actor }}\n*Commit:* ${{ github.sha }}\n*Estado:* La API Spring Boot ha sido compilada y validada correctamente con las pruebas de Maven."
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
 
       # -------------------------------------------------------------
       # PASO: Notificación de Fallo en Slack
@@ -87,4 +87,4 @@ jobs:
               "text": "🚨 *¡Fallo en la Integración Continua!*\n*Repositorio:* ${{ github.repository }}\n*Rama:* ${{ github.ref_name }}\n*Autor:* ${{ github.actor }}\n*Commit:* ${{ github.sha }}\n*Estado:* La compilación o las pruebas han fallado. Revisen los logs en GitHub Actions."
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
