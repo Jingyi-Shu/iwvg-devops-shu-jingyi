@@ -1,13 +1,17 @@
 package es.upm.miw.devops.rest;
 
-import es.upm.miw.devops.services.UserService;
+import es.upm.miw.devops.user.User;
+import es.upm.miw.devops.user.UserDto;
+import es.upm.miw.devops.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(UserResource.USERS)
 public class UserResource {
-    public static final String USERS = "/users";
+    public static final String USERS = "/user";
 
     private final UserService userService;
 
@@ -17,7 +21,13 @@ public class UserResource {
     }
 
     @GetMapping("/{id}")
-    public Object read(@PathVariable String id) {
+    public User read(@PathVariable String id) {
         return this.userService.read(id);
+    }
+
+    // Task 2️⃣: GET /user/search?billable=true
+    @GetMapping("/search")
+    public List<UserDto> search(@RequestParam(required = false) Boolean billable) {
+        return this.userService.search(billable);
     }
 }
