@@ -27,4 +27,17 @@ class UserServiceTest {
         this.userService.delete("1");
         assertThrows(ResponseStatusException.class, () -> this.userService.read("1"));
     }
+
+    // 5️⃣ Task: GET /user/{id} Service Test
+    @Test
+    void testReadUser() {
+        User user = this.userService.read("1");
+        assertNotNull(user);
+        assertEquals("John", user.getFirstName());
+    }
+
+    @Test
+    void testReadUserNotFound() {
+        assertThrows(ResponseStatusException.class, () -> this.userService.read("999"));
+    }
 }
