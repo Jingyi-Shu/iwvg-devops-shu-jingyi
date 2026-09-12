@@ -37,4 +37,11 @@ public class UserService {
         User user = this.read(id);
         this.databaseSeeder.getUsers().remove(user);
     }
+
+    // 6️⃣ Task: Update user active status
+    public User updateActive(String id, Boolean active) {
+        User user = this.read(id);
+        user.setActive(active);
+        return user;
+    }
 }
