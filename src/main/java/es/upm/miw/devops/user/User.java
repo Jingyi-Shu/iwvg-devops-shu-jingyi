@@ -28,6 +28,18 @@ public class User {
         this.active = active;
     }
 
+    // Task 2️⃣: 判断是否为可计费用户（8个字段均非空且非纯空格）
+    public Boolean isBillable() {
+        return isNotBlank(firstName) && isNotBlank(familyName) && isNotBlank(email) &&
+                isNotBlank(identity) && isNotBlank(address) && isNotBlank(city) &&
+                isNotBlank(province) && isNotBlank(postalCode);
+    }
+
+    private boolean isNotBlank(String str) {
+        return str != null && !str.trim().isEmpty();
+    }
+
+    // Getters 和 Setters 保持不变
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public String getFirstName() { return firstName; }
