@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 class UserResourceFT {
 
@@ -33,6 +33,25 @@ class UserResourceFT {
 
         this.webTestClient.get()
                 .uri(UserResource.USERS + "/1")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testReadUserEndpoint() {
+        this.webTestClient.get()
+                .uri(UserResource.USERS + "/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo("1")
+                .jsonPath("$.firstName").isEqualTo("John");
+    }
+
+    @Test
+    void testReadUserEndpointNotFound() {
+        this.webTestClient.get()
+                .uri(UserResource.USERS + "/999")
                 .exchange()
                 .expectStatus().isNotFound();
     }
