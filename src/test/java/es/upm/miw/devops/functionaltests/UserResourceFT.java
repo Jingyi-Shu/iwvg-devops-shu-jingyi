@@ -37,4 +37,24 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    // 5️⃣ Task: GET /user/{id} Endpoint Test
+    @Test
+    void testReadUserEndpoint() {
+        this.webTestClient.get()
+                .uri(UserResource.USERS + "/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo("1")
+                .jsonPath("$.firstName").isEqualTo("John");
+    }
+
+    @Test
+    void testReadUserEndpointNotFound() {
+        this.webTestClient.get()
+                .uri(UserResource.USERS + "/999")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }
