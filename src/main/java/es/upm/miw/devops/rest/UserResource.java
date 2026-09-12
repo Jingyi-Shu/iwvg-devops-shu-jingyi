@@ -36,4 +36,10 @@ public class UserResource {
     public void delete(@PathVariable String id) {
         this.userService.delete(id);
     }
+
+    // 6️⃣ Task: PUT /user/{id}/active
+    @PutMapping("/{id}/active")
+    public User updateActive(@PathVariable String id, @RequestBody UserActiveDto userActiveDto) {
+        return this.userService.updateActive(id, userActiveDto.getActive());
+    }
 }
