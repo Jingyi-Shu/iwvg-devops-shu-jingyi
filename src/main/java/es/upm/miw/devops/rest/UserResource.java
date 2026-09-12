@@ -1,6 +1,7 @@
 package es.upm.miw.devops.rest;
 
 import es.upm.miw.devops.user.User;
+import es.upm.miw.devops.user.UserActiveDto;
 import es.upm.miw.devops.user.UserDto;
 import es.upm.miw.devops.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

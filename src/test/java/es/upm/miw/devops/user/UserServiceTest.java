@@ -27,4 +27,10 @@ class UserServiceTest {
         this.userService.delete("1");
         assertThrows(ResponseStatusException.class, () -> this.userService.read("1"));
     }
+
+    @Test
+    void testUpdateActive() {
+        User user = this.userService.updateActive("2", true);
+        assertTrue(user.getActive());
+    }
 }
