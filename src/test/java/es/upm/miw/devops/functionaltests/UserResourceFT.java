@@ -72,4 +72,16 @@ class UserResourceFT {
                 .expectBody()
                 .jsonPath("$.active").isEqualTo(true);
     }
+
+    // 8️⃣ Task: Search Billable Endpoint Test
+    @Test
+    void testSearchBillableEndpoint() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(UserResource.USERS + "/search")
+                        .queryParam("billable", "true")
+                        .build())
+                .exchange()
+                .expectStatus().isOk();
+    }
 }
