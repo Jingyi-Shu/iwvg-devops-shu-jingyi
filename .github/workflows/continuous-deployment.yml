@@ -22,9 +22,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract branch name
-        id: extract_branch
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+      - name: Prepare tags (lower case repository owner)
+        id: prep
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "BRANCH_NAME=${BRANCH}" >> $GITHUB_OUTPUT
+          echo "OWNER_LOWER=${OWNER}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -32,7 +36,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/iwvg-devops-2026-${{ steps.extract_branch.outputs.BRANCH_NAME }}:latest
+            ghcr.io/${{ steps.prep.outputs.OWNER_LOWER }}/iwvg-devops-2026-${{ steps.prep.outputs.BRANCH_NAME }}:latest
 
   cd:
     name: Deploy Docker Postgres on AWS Lightsail
