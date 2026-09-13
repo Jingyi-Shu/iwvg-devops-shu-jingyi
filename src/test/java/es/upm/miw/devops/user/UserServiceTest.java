@@ -40,4 +40,10 @@ class UserServiceTest {
     void testReadUserNotFound() {
         assertThrows(ResponseStatusException.class, () -> this.userService.read("999"));
     }
+
+    @Test
+    void testUpdateActive() {
+        User user = this.userService.updateActive("2", true);
+        assertTrue(user.getActive());
+    }
 }
