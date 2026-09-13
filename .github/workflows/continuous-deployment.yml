@@ -7,10 +7,17 @@ on:
       - staging
       - develop
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-and-push:
     name: Build and Push Docker Image to GHCR
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
