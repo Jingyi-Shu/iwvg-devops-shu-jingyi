@@ -2,11 +2,13 @@ package es.upm.miw.devops.functionaltests;
 
 import es.upm.miw.devops.rest.UserResource;
 import es.upm.miw.devops.user.DatabaseSeeder;
+import es.upm.miw.devops.user.UserActiveDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 // ⚠️ 重点：必须添加 (webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -56,5 +58,18 @@ class UserResourceFT {
                 .uri(UserResource.USERS + "/999")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdateActiveEndpoint() {
+        UserActiveDto activeDto = new UserActiveDto(true);
+        this.webTestClient.put()
+                .uri(UserResource.USERS + "/2/active")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(activeDto)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.active").isEqualTo(true);
     }
 }
