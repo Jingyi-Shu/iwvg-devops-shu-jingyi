@@ -1,7 +1,17 @@
 name: CI
+
 on:
   push:
-    branches: [develop,release-*]
+    branches:
+      - master
+      - staging
+      - develop
+      - 'release-*'
+  pull_request:
+    branches:
+      - master
+      - staging
+      - develop
 
 jobs:
   devops:
