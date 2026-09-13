@@ -46,4 +46,11 @@ class UserServiceTest {
         User user = this.userService.updateActive("2", true);
         assertTrue(user.getActive());
     }
+
+    // 8️⃣ Task: Search Billable Service Test
+    @Test
+    void testSearchBillableUsers() {
+        assertNotNull(this.userService.search(true));
+        assertNotNull(this.userService.search(null));
+    }
 }

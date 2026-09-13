@@ -16,6 +16,8 @@ public class UserResource {
 
     private final UserService userService;
 
+    public static final String SEARCH = "/search";
+
     @Autowired
     public UserResource(UserService userService) {
         this.userService = userService;
