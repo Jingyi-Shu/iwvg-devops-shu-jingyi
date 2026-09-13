@@ -31,4 +31,17 @@ public class UserService {
                 .map(UserDto::new)
                 .collect(Collectors.toList());
     }
+
+    // 3️⃣ Task: DELETE /user/{id}
+    public void delete(String id) {
+        User user = this.read(id);
+        this.databaseSeeder.getUsers().remove(user);
+    }
+
+    // 6️⃣ Task: Update active status
+    public User updateActive(String id, Boolean active) {
+        User user = this.read(id);
+        user.setActive(active);
+        return user;
+    }
 }
