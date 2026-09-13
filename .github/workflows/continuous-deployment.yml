@@ -15,9 +15,6 @@ jobs:
   build-and-push:
     name: Build and Push Docker Image to GHCR
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -44,27 +41,3 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ steps.prep.outputs.OWNER_LOWER }}/iwvg-devops-2026-${{ steps.prep.outputs.BRANCH_NAME }}:latest
-
-  cd:
-    name: Deploy Docker Postgres on AWS Lightsail
-    needs: build-and-push
-    runs-on: ubuntu-22.04
-    steps:
-      - name: 🚀 Deploy on AWS Lightsail
-        uses: appleboy/ssh-action@v1.2.1
-        with:
-          host: ${{ secrets.AWS_LIGHTSAIL_IP }}
-          username: ${{ secrets.AWS_LIGHTSAIL_USER }}
-          key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY }}
-          script: |
-            docker rm -f postgres || true
-            docker network create devopsNet || true
-            docker run -d \
-              --name postgres \
-              --restart always \
-              --network devopsNet \
-              -p 5432:5432 \
-              -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-              -e POSTGRES_DB=iwvgdevopsdb \
-              postgres:15.10
