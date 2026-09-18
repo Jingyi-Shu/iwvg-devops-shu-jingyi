@@ -1,0 +1,16 @@
+logging:
+  level:
+    root: WARN
+    es.upm.api: INFO
+
+app:
+  hosting: render
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: ${SPRING_DATABASE_URL:${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/iwvgdevopsdb}}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
