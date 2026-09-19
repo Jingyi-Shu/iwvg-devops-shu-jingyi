@@ -1,12 +1,26 @@
 server:
   port: 10000
 
+logging:
+  level:
+    root: WARN
+    es.upm.api: INFO
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+app:
+  hosting: AWS
+
 spring:
-  datasource:
-    url: ${SPRING_DATABASE_URL:jdbc:postgresql://postgres:5432/iwvgdevopsdb}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATABASE_URL:${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/iwvgdevopsdb}}
+    username: ${SPRING_DATASOURCE_USERNAME:${POSTGRES_USER:postgres}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${POSTGRES_PASSWORD:postgres}}
