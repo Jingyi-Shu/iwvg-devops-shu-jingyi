@@ -51,8 +51,6 @@
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
-        <!-- Mockito Version for Surefire ArgLine -->
-        <mockito.version>5.14.2</mockito.version>
         <!-- coverage report -->
         <jacoco.version>0.8.13</jacoco.version>
         <!-- Official Plugin Sonar -->
@@ -71,32 +69,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!-- JPA / Database -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- JPA / Database -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <!-- Actuator -->
+        <!-- http://localhost:8080/actuator/info   -->
+        <!-- http://localhost:8080/actuator/health -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!-- OpenAPI -->
+        <!-- OpenAPI http://localhost:8080/swagger-ui.html -->
+        <!-- OpenAPI http://localhost:8080/v3/api-docs -->
+        <!-- OpenAPI http://localhost:8081/v3/api-docs.yaml (yaml)  -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -120,14 +102,7 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- H2 Database for Unit Testing -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -161,7 +136,7 @@
                     </execution>
                     <execution>
                         <id>default-report</id>
-                        <phase>post-integration-test</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -210,7 +185,7 @@
                             </includes>
                         </configuration>
                     </execution>
-                    <!-- 3) Verificación final -->
+                    <!-- 3) Verificación final (reporta fallos si algún IT o FT falla) -->
                     <execution>
                         <id>verify-all</id>
                         <phase>verify</phase>
