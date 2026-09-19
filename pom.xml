@@ -14,7 +14,7 @@
 
     <groupId>es.upm.miw</groupId>
     <artifactId>iwvg-devops-shu-jingyi</artifactId>
-    <version>6.0.0</version>
+    <version>6.0.1</version>
     <packaging>jar</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
     <url>https://github.com/Jingyi-Shu/${project.artifactId}</url>
@@ -69,16 +69,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!-- JPA / Database -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <!-- Actuator -->
-        <!-- http://localhost:8080/actuator/info   -->
-        <!-- http://localhost:8080/actuator/health -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!-- OpenAPI http://localhost:8080/swagger-ui.html -->
-        <!-- OpenAPI http://localhost:8080/v3/api-docs -->
-        <!-- OpenAPI http://localhost:8081/v3/api-docs.yaml (yaml)  -->
+        <!-- OpenAPI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -102,12 +108,8 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -190,7 +192,7 @@
                             </includes>
                         </configuration>
                     </execution>
-                    <!-- 3) Verificación final (reporta fallos si algún IT o FT falla) -->
+                    <!-- 3) Verificación final -->
                     <execution>
                         <id>verify-all</id>
                         <phase>verify</phase>
