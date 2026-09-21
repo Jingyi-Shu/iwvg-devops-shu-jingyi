@@ -54,7 +54,7 @@ jobs:
 
 
       - name: 🚀 Deploy on AWS Lightsail
-        uses: appleboy/ssh-action@v1.2.1
+        uses: appleboy/ssh-action@7eaf7f311f997f9037c358055a40b7cd8c5e3d74 # v1.2.0
         with:
           host: ${{ secrets.AWS_LIGHTSAIL_IP_MAIN }}
           username: ${{ secrets.AWS_LIGHTSAIL_USER_MAIN }}
