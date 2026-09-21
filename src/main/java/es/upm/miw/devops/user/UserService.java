@@ -44,4 +44,14 @@ public class UserService {
         user.setActive(active);
         return user;
     }
+
+    // 9 Task: Update user data (PUT /users/{id})
+    public UserDto update(String id, UserDto userDto) {
+        User user = this.read(id);
+        user.setFirstName(userDto.getFirstName());
+        user.setFamilyName(userDto.getFamilyName());
+        user.setEmail(userDto.getEmail());
+        user.setActive(userDto.getActive());
+        return new UserDto(user);
+    }
 }
