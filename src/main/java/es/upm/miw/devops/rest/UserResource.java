@@ -45,4 +45,16 @@ public class UserResource {
     public User updateActive(@PathVariable String id, @RequestBody UserActiveDto userActiveDto) {
         return this.userService.updateActive(id, userActiveDto.getActive());
     }
+
+    // 9 Task: PUT /user/{id}
+    @PutMapping("/{id}")
+    public UserDto update(@PathVariable String id, @RequestBody UserDto userDto) {
+        return this.userService.update(id, userDto);
+    }
+
+    // 10 Task: PATCH /user
+    @PatchMapping
+    public void updateActiveList(@RequestBody List<UserActiveDto> userActiveDtoList) {
+        this.userService.updateActiveList(userActiveDtoList);
+    }
 }
