@@ -54,4 +54,12 @@ public class UserService {
         user.setActive(userDto.getActive());
         return new UserDto(user);
     }
+
+    // 10 Task: PATCH /user body:[{id,active}]
+    public void updateActiveList(List<UserActiveDto> userActiveDtoList) {
+        userActiveDtoList.forEach(userActiveDto -> {
+            User user = this.read(userActiveDto.getId());
+            user.setActive(userActiveDto.getActive());
+        });
+    }
 }
