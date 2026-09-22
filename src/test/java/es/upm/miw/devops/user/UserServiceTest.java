@@ -53,4 +53,20 @@ class UserServiceTest {
         assertNotNull(this.userService.search(true));
         assertNotNull(this.userService.search(null));
     }
+
+    // 9 Task: PUT /user/{id} Service Test
+    @Test
+    void testUpdateUser() {
+        UserDto userDto = new UserDto();
+        userDto.setFirstName("JohnUpdated");
+        userDto.setFamilyName("DoeUpdated");
+        userDto.setEmail("john_updated@example.com");
+        userDto.setActive(false);
+
+        UserDto updatedUser = this.userService.update("1", userDto);
+        assertEquals("JohnUpdated", updatedUser.getFirstName());
+        assertEquals("DoeUpdated", updatedUser.getFamilyName());
+        assertEquals("john_updated@example.com", updatedUser.getEmail());
+        assertFalse(updatedUser.getActive());
+    }
 }

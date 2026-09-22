@@ -3,6 +3,7 @@ package es.upm.miw.devops.functionaltests;
 import es.upm.miw.devops.rest.UserResource;
 import es.upm.miw.devops.user.DatabaseSeeder;
 import es.upm.miw.devops.user.UserActiveDto;
+import es.upm.miw.devops.user.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,27 @@ class UserResourceFT {
                         .build())
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    // 9 Task: PUT /user/{id} Endpoint Test
+    @Test
+    void testUpdateUserEndpoint() {
+        UserDto userDto = new UserDto();
+        userDto.setFirstName("JohnUpdated");
+        userDto.setFamilyName("DoeUpdated");
+        userDto.setEmail("john_updated@example.com");
+        userDto.setActive(false);
+
+        this.webTestClient.put()
+                .uri(UserResource.USERS + "/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(userDto)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.firstName").isEqualTo("JohnUpdated")
+                .jsonPath("$.familyName").isEqualTo("DoeUpdated")
+                .jsonPath("$.email").isEqualTo("john_updated@example.com")
+                .jsonPath("$.active").isEqualTo(false);
     }
 }
