@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -68,5 +70,17 @@ class UserServiceTest {
         assertEquals("DoeUpdated", updatedUser.getFamilyName());
         assertEquals("john_updated@example.com", updatedUser.getEmail());
         assertFalse(updatedUser.getActive());
+    }
+
+    // 10 Task: PATCH /user Service Test
+    @Test
+    void testUpdateActiveList() {
+        List<UserActiveDto> userActiveDtoList = List.of(
+                new UserActiveDto("1", false),
+                new UserActiveDto("2", true)
+        );
+        this.userService.updateActiveList(userActiveDtoList);
+        assertFalse(this.userService.read("1").getActive());
+        assertTrue(this.userService.read("2").getActive());
     }
 }

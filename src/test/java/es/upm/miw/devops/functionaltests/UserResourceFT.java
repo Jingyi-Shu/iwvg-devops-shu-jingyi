@@ -12,6 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 // ⚠️ 重点：必须添加 (webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -106,5 +111,23 @@ class UserResourceFT {
                 .jsonPath("$.familyName").isEqualTo("DoeUpdated")
                 .jsonPath("$.email").isEqualTo("john_updated@example.com")
                 .jsonPath("$.active").isEqualTo(false);
+    }
+
+    // 10 Task: PATCH /user Endpoint Test
+    @Test
+    void testUpdateActiveListEndpoint() {
+        List<UserActiveDto> userActiveDtoList = List.of(
+                new UserActiveDto("1", false),
+                new UserActiveDto("2", true)
+        );
+        this.webTestClient.patch()
+                .uri(UserResource.USERS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(userActiveDtoList)
+                .exchange()
+                .expectStatus().isOk();
+
+        assertFalse(this.databaseSeeder.getUsers().get(0).getActive());
+        assertTrue(this.databaseSeeder.getUsers().get(1).getActive());
     }
 }
