@@ -3,6 +3,7 @@ package es.upm.miw.devops.functionaltests;
 import es.upm.miw.devops.rest.UserResource;
 import es.upm.miw.devops.user.DatabaseSeeder;
 import es.upm.miw.devops.user.UserActiveDto;
+import es.upm.miw.devops.user.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,11 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // ⚠️ 重点：必须添加 (webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -83,5 +89,45 @@ class UserResourceFT {
                         .build())
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    // 9 Task: PUT /user/{id} Endpoint Test
+    @Test
+    void testUpdateUserEndpoint() {
+        UserDto userDto = new UserDto();
+        userDto.setFirstName("JohnUpdated");
+        userDto.setFamilyName("DoeUpdated");
+        userDto.setEmail("john_updated@example.com");
+        userDto.setActive(false);
+
+        this.webTestClient.put()
+                .uri(UserResource.USERS + "/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(userDto)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.firstName").isEqualTo("JohnUpdated")
+                .jsonPath("$.familyName").isEqualTo("DoeUpdated")
+                .jsonPath("$.email").isEqualTo("john_updated@example.com")
+                .jsonPath("$.active").isEqualTo(false);
+    }
+
+    // 10 Task: PATCH /user Endpoint Test
+    @Test
+    void testUpdateActiveListEndpoint() {
+        List<UserActiveDto> userActiveDtoList = List.of(
+                new UserActiveDto("1", false),
+                new UserActiveDto("2", true)
+        );
+        this.webTestClient.patch()
+                .uri(UserResource.USERS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(userActiveDtoList)
+                .exchange()
+                .expectStatus().isOk();
+
+        assertFalse(this.databaseSeeder.getUsers().get(0).getActive());
+        assertTrue(this.databaseSeeder.getUsers().get(1).getActive());
     }
 }
