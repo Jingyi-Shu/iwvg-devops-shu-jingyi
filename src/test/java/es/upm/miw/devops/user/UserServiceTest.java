@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -52,5 +54,33 @@ class UserServiceTest {
     void testSearchBillableUsers() {
         assertNotNull(this.userService.search(true));
         assertNotNull(this.userService.search(null));
+    }
+
+    // 9 Task: PUT /user/{id} Service Test
+    @Test
+    void testUpdateUser() {
+        UserDto userDto = new UserDto();
+        userDto.setFirstName("JohnUpdated");
+        userDto.setFamilyName("DoeUpdated");
+        userDto.setEmail("john_updated@example.com");
+        userDto.setActive(false);
+
+        UserDto updatedUser = this.userService.update("1", userDto);
+        assertEquals("JohnUpdated", updatedUser.getFirstName());
+        assertEquals("DoeUpdated", updatedUser.getFamilyName());
+        assertEquals("john_updated@example.com", updatedUser.getEmail());
+        assertFalse(updatedUser.getActive());
+    }
+
+    // 10 Task: PATCH /user Service Test
+    @Test
+    void testUpdateActiveList() {
+        List<UserActiveDto> userActiveDtoList = List.of(
+                new UserActiveDto("1", false),
+                new UserActiveDto("2", true)
+        );
+        this.userService.updateActiveList(userActiveDtoList);
+        assertFalse(this.userService.read("1").getActive());
+        assertTrue(this.userService.read("2").getActive());
     }
 }
