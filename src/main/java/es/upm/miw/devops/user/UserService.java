@@ -1,5 +1,6 @@
 package es.upm.miw.devops.user;
 
+import es.upm.miw.devops.rest.exceptionshandler.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -56,8 +57,19 @@ public class UserService {
     }
 
     // 10 Task: PATCH /user body:[{id,active}]
+    //public void updateActiveList(List<UserActiveDto> userActiveDtoList) {
+    //    userActiveDtoList.forEach(userActiveDto -> {
+    //        User user = this.read(userActiveDto.getId());
+    //        user.setActive(userActiveDto.getActive());
+    //    });
+    //}
+
+    // 7. Bug fix: 禁止禁用 ID 为 "1" 的主用户
     public void updateActiveList(List<UserActiveDto> userActiveDtoList) {
         userActiveDtoList.forEach(userActiveDto -> {
+            if ("1".equals(userActiveDto.getId()) && Boolean.FALSE.equals(userActiveDto.getActive())) {
+                throw new ForbiddenException("Cannot deactivate primary user: " + userActiveDto.getId());
+            }
             User user = this.read(userActiveDto.getId());
             user.setActive(userActiveDto.getActive());
         });

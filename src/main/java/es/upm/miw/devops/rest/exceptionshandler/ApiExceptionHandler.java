@@ -11,11 +11,11 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
+    // 1. 拦截 404 Not Found (保留 ResponseStatusException)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
             NoResourceFoundException.class,
             ResponseStatusException.class
-
     })
     @ResponseBody
     public ErrorMessage noResourceFoundRequest(Exception exception) {
@@ -24,6 +24,17 @@ public class ApiExceptionHandler {
                 HttpStatus.NOT_FOUND.value());
     }
 
+    // 2. 拦截 403 Forbidden (专用于禁止禁用主用户/ADMIN)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler({
+            ForbiddenException.class
+    })
+    @ResponseBody
+    public ErrorMessage forbiddenRequest(Exception exception) {
+        return new ErrorMessage(exception, HttpStatus.FORBIDDEN.value());
+    }
+
+    // 3. 拦截 500 通用异常
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({
             Exception.class
@@ -32,5 +43,4 @@ public class ApiExceptionHandler {
     public ErrorMessage exception(Exception exception) {
         return new ErrorMessage(new RuntimeException("ERROR"), HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
-
 }

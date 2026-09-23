@@ -1,5 +1,6 @@
 package es.upm.miw.devops.user;
 
+import es.upm.miw.devops.rest.exceptionshandler.ForbiddenException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,15 +73,22 @@ class UserServiceTest {
         assertFalse(updatedUser.getActive());
     }
 
-    // 10 Task: PATCH /user Service Test
+    // 4️⃣ Task: PATCH /user Service Test (使用 ID="2" 和 ID="3" 避开主用户限制)
     @Test
     void testUpdateActiveList() {
         List<UserActiveDto> userActiveDtoList = List.of(
-                new UserActiveDto("1", false),
-                new UserActiveDto("2", true)
+                new UserActiveDto("2", true),
+                new UserActiveDto("3", false)
         );
         this.userService.updateActiveList(userActiveDtoList);
-        assertFalse(this.userService.read("1").getActive());
         assertTrue(this.userService.read("2").getActive());
+        assertFalse(this.userService.read("3").getActive());
+    }
+
+    // 7. Bug fix Test
+    @Test
+    void testUpdateActiveListPrimaryUserForbidden() {
+        List<UserActiveDto> list = List.of(new UserActiveDto("1", false));
+        assertThrows(ForbiddenException.class, () -> this.userService.updateActiveList(list));
     }
 }

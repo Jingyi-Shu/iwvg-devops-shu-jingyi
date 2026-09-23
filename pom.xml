@@ -107,11 +107,6 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -161,6 +156,7 @@
                     <argLine>
                         -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
                         -Xshare:off
+                        -XX:+EnableDynamicAgentLoading
                     </argLine>
                 </configuration>
             </plugin>
@@ -168,6 +164,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven-failsafe-plugin.version}</version>
+                <configuration>
+                    <argLine>
+                        -Xshare:off
+                        -XX:+EnableDynamicAgentLoading
+                    </argLine>
+                </configuration>
                 <executions>
                     <!-- 1) Integration Tests -->
                     <execution>
