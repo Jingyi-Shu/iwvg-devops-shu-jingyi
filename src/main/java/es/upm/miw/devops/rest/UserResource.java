@@ -52,7 +52,7 @@ public class UserResource {
         return this.userService.update(id, userDto);
     }
 
-    // 10 Task: PATCH /user
+    // 10 Task: PATCH /user (批量更新 active 状态)
     @PatchMapping
     public void updateActiveList(@RequestBody List<UserActiveDto> userActiveDtoList) {
         this.userService.updateActiveList(userActiveDtoList);
