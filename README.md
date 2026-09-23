@@ -2,12 +2,12 @@
 ## Ingeniería Web: Visión General (IWVG) DevOps
 > Este proyecto es un apoyo docente de la asignatura. Cada release liberada corresponde al código utilizado en clase del curso indicado
 
-[![GitHub](https://img.shields.io/github/license/miw-upm/iwvg-devops?color=informational)](https://github.com/miw-upm/iwvg-devops/blob/develop/LICENSE.md)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/miw-upm/iwvg-devops?color=informational)](https://github.com/miw-upm/iwvg-devops/releases)
-![GitHub Release Date](https://img.shields.io/github/release-date/miw-upm/iwvg-devops?color=informational)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/miw-upm/iwvg-devops)
-![GitHub issues](https://img.shields.io/github/issues/miw-upm/iwvg-devops?color=important)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/miw-upm/iwvg-devops?color=informational)
+[![GitHub](https://img.shields.io/github/license/Jingyi-Shu/iwvg-devops-shu-jingyi)](https://github.com/Jingyi-Shu/iwvg-devops-shu-jingyi/blob/develop/LICENSE.md)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Jingyi-Shu/iwvg-devops-shu-jingyi)](https://github.com/Jingyi-Shu/iwvg-devops-shu-jingyi/releases)
+![GitHub Release Date](https://img.shields.io/github/release-date/Jingyi-Shu/iwvg-devops-shu-jingyi)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Jingyi-Shu/iwvg-devops-shu-jingyi)
+![GitHub issues](https://img.shields.io/github/issues/Jingyi-Shu/iwvg-devops-shu-jingyi)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/Jingyi-Shu/iwvg-devops-shu-jingyi)
 
 ### Estado del código
 [![DevOps](https://github.com/Jingyi-Shu/iwvg-devops-shu-jingyi/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/Jingyi-Shu/iwvg-devops-shu-jingyi/actions/workflows/continuous-integration.yml)
