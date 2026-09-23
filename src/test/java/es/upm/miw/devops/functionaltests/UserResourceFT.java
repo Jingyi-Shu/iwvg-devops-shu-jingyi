@@ -113,12 +113,12 @@ class UserResourceFT {
                 .jsonPath("$.active").isEqualTo(false);
     }
 
-    // 10 Task: PATCH /user Endpoint Test
+    // 4️⃣ Task: PATCH /user Endpoint Test
     @Test
     void testUpdateActiveListEndpoint() {
         List<UserActiveDto> userActiveDtoList = List.of(
-                new UserActiveDto("1", false),
-                new UserActiveDto("2", true)
+                new UserActiveDto("2", true),
+                new UserActiveDto("3", false)
         );
         this.webTestClient.patch()
                 .uri(UserResource.USERS)
@@ -127,7 +127,19 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isOk();
 
-        assertFalse(this.databaseSeeder.getUsers().get(0).getActive());
-        assertTrue(this.databaseSeeder.getUsers().get(1).getActive());
+        assertTrue(this.databaseSeeder.getUsers().get(1).getActive());  // User 2
+        assertFalse(this.databaseSeeder.getUsers().get(2).getActive()); // User 3
+    }
+
+    // 7. Bug fix Endpoint Test
+    @Test
+    void testUpdateActiveListPrimaryUserForbiddenEndpoint() {
+        List<UserActiveDto> list = List.of(new UserActiveDto("1", false));
+        this.webTestClient.patch()
+                .uri(UserResource.USERS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(list)
+                .exchange()
+                .expectStatus().isForbidden();
     }
 }
